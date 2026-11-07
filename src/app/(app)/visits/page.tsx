@@ -3,10 +3,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import type { VisitLocation } from "@/lib/types";
+import { useAuth } from "@/components/AuthProvider";
 
 const empty = { name: "", address: "", km: "" };
 
 export default function VisitLocationsPage() {
+  const { profile } = useAuth();
+  const isAdmin = profile?.role === "admin";
   const [rows, setRows] = useState<VisitLocation[]>([]);
   const [form, setForm] = useState(empty);
   const [editId, setEditId] = useState<string | null>(null);
@@ -38,6 +41,20 @@ export default function VisitLocationsPage() {
   const toggle = async (r: VisitLocation) => {
     const { error } = await supabase.from("visit_locations").update({ active: !r.active }).eq("id", r.id);
     if (error) setError(error.message); else load();
+  };
+
+  const remove = async (r: VisitLocation) => {
+    if (!confirm(`Delete "${r.name}"? Jobs already recorded keep their address and km.`)) return;
+    setError(""); setMsg("");
+    const { error } = await supabase.from("visit_locations").delete().eq("id", r.id);
+    if (error) {
+      // a closed (locked) job uses this location, so it cannot be deleted: hide it instead
+      await supabase.from("visit_locations").update({ active: false }).eq("id", r.id);
+      setMsg(`"${r.name}" is used by closed jobs, so it was hidden instead of deleted.`);
+    } else {
+      setMsg("Location deleted.");
+    }
+    load();
   };
 
   return (
@@ -83,6 +100,7 @@ export default function VisitLocationsPage() {
                 <td className="td whitespace-nowrap text-right">
                   <button className="btn btn-sm" onClick={() => { setEditId(r.id); setForm({ name: r.name, address: r.address ?? "", km: String(r.km) }); }}>Edit</button>{" "}
                   <button className="btn btn-sm" onClick={() => toggle(r)}>{r.active ? "Hide" : "Show"}</button>
+                  {isAdmin && <>{" "}<button className="btn btn-danger btn-sm" onClick={() => remove(r)}>Delete</button></>}
                 </td>
               </tr>
             ))}
