@@ -35,7 +35,7 @@ export default function LoginPage() {
     <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
       <aside className="hidden flex-col justify-between bg-ink p-12 text-white lg:flex">
         <div>
-          <div className="text-lg font-semibold tracking-tight">Service Desk</div>
+          <div className="text-lg font-semibold tracking-tight">Shreeraj infosystem</div>
           <div className="text-sm text-slate-400">{CENTRE}</div>
         </div>
         <div>
@@ -57,7 +57,7 @@ export default function LoginPage() {
             </div>
           </dl>
         </div>
-        <div className="mono text-xs text-slate-500">2026-27/001</div>
+        <div className="mono text-xs text-slate-500">Your One Stop Solution</div>
       </aside>
 
       <main className="flex items-center justify-center p-6">
