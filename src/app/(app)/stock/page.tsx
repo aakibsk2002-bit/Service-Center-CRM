@@ -318,7 +318,7 @@ function StockInner() {
 
       {tab === "items" ? (
         <div className="panel overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="table-compact w-full text-sm">
             <thead>
               <tr>
                 <th className="th">Item</th>
@@ -353,15 +353,17 @@ function StockInner() {
                       <td className="td mono text-right">{money(Number(i.price))}</td>
                       {isAdmin && <td className="td mono text-right text-slate-600">{i.is_service ? "-" : money(Number(i.price) - Number(i.cost_price))}</td>}
                       <td className="td mono text-right">{i.is_service ? "-" : money(i.stock_qty * Number(isAdmin ? i.cost_price : i.price))}</td>
-                      <td className="td whitespace-nowrap text-right text-xs">
-                        {!i.is_service && (
-                          <>
-                            <button onClick={() => setPanel({ id: i.id, kind: "in" })} className="btn btn-ghost btn-sm">Add stock</button>{" "}
-                            <button onClick={() => setPanel({ id: i.id, kind: "fix" })} className="btn btn-ghost btn-sm">Correct count</button>{" "}
-                          </>
-                        )}
-                        <button onClick={() => setPanel({ id: i.id, kind: "edit" })} className="btn btn-ghost btn-sm">Edit</button>
-                        {isAdmin && <button onClick={() => deleteItem(i)} className="btn btn-ghost btn-sm text-red-700">Delete</button>}
+                      <td className="td text-right">
+                        <div className="flex flex-nowrap justify-end gap-1 whitespace-nowrap">
+                          {!i.is_service && (
+                            <>
+                              <button onClick={() => setPanel({ id: i.id, kind: "in" })} className="btn btn-ghost btn-xs">Add stock</button>
+                              <button onClick={() => setPanel({ id: i.id, kind: "fix" })} className="btn btn-ghost btn-xs">Correct count</button>
+                            </>
+                          )}
+                          <button onClick={() => setPanel({ id: i.id, kind: "edit" })} className="btn btn-ghost btn-xs">Edit</button>
+                          {isAdmin && <button onClick={() => deleteItem(i)} className="btn btn-ghost btn-xs btn-danger">Delete</button>}
+                        </div>
                       </td>
                     </tr>
                     {open && (

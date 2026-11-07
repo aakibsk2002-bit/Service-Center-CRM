@@ -64,10 +64,12 @@ body {
 }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .btn-sm { padding: 0.3rem 0.7rem; font-size: 0.8125rem; }
+.btn-xs { padding: 0.25rem 0.5rem; font-size: 0.75rem; }
 .btn-primary { background: var(--color-ink); color: #fff; }
 .btn-primary:hover:not(:disabled) { background: var(--color-ink-2); }
 .btn-ghost { background: #fff; border-color: #c3cad4; color: #14202e; }
 .btn-ghost:hover:not(:disabled) { background: #f6f8fa; border-color: #a9b3bf; }
+.btn-ghost.btn-danger { color: #b91c1c; }
 .btn-go { background: #11803f; color: #fff; }
 .btn-go:hover:not(:disabled) { background: #0d6a34; }
 
@@ -81,6 +83,8 @@ body {
   background: #f8f9fb;
 }
 .td { padding: 0.7rem 1rem; vertical-align: top; }
+/* tighter cells for wide tables so every column fits without zooming out */
+.table-compact .th, .table-compact .td { padding-left: 0.6rem; padding-right: 0.6rem; }
 
 .mono { font-family: var(--font-mono); font-feature-settings: "zero" 1; }
 
